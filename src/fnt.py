@@ -3,6 +3,8 @@ import sys
 import argparse
 import logging
 from datetime import date
+from urllib import request
+import json
 
 
 class GetMetrics:
@@ -40,10 +42,8 @@ class GetMetrics:
                     with open(f'{args_parser.output}/metrics/{date.today()}.txt', "w") as f:
                         f.write(
                             f'cpu,memoria,fsreads,fswrites,packetsrec,packetstrans,bytesrec,bytestrans\n')
-                        # change to reponse in json
                         for i in range(0, 5):
-                            f.write(self.__getMetrics())
-
+                            f.write(f'{self.__getMetrics(args_parser.url)},')
                 else:
                     print(args_parser.url)  # change to reponse in json
 
@@ -53,8 +53,23 @@ class GetMetrics:
                     level=logging.ERROR, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', filename='logs/errors.log')
                 logging.error("Error: {}".format(e))
 
-    def __args(self):
+    def __args(self) -> str:
         return self.parser.parse_args()
 
-    def __getMetrics(self):
-        return f'1, 2, 3, 4, 5, 6, 7, 8\n'
+    def __getMetrics(self, url) -> str:
+        self.url: str = url
+
+        if url != "":
+            try:
+                res: str = request.urlopen(url).read()
+                json_dict: dict = json.loads(res.decode('utf-8'))
+                out_dict: dict = [x for x in json_dict['data']
+                                  ['result'][0]['value']]
+                value_zero = str(out_dict[0])
+                return value_zero
+
+            except Exception as e:
+                os.makedirs("logs", exist_ok=True)
+                logging.basicConfig(
+                    level=logging.ERROR, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', filename='logs/errors.log')
+                logging.error(f"Error: {e}")
