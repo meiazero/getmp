@@ -20,22 +20,35 @@ URLS = [CPU, MEMORIA, FSREADS, FSWRITES,
 
 
 def ReqMetrics(url, output, type='metric'):
-    res: str = request.urlopen(url).read()
-    json_dict: dict = json.loads(res.decode('utf-8'))
-    out_dict: dict = [x for x in json_dict['data']
-                      ['result'][0]['value']]
-    value_zero = str(out_dict[1])
-    WriteMetricsOnFile(value=value_zero, locale=output, metric_name=type)
+    try:
+        res: str = request.urlopen(url).read()
+        json_dict: dict = json.loads(res.decode('utf-8'))
+        out_dict: dict = [x for x in json_dict['data']
+                          ['result'][0]['value']]
+        value_zero = str(out_dict[1])
+        WriteMetricsOnFile(value=value_zero, locale=output, metric_name=type)
+        print(f'{type}: {value_zero}')
+    except Exception as e:
+        os.makedirs("logs", exist_ok=True)
+        logging.basicConfig(
+            level=logging.ERROR, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', filename='logs/errors.log')
+        logging.error("Error: {}".format(e))
 
 
 def WriteMetricsOnFile(value, locale='.', metric_name="metric",):
     if locale:
-        os.makedirs(f'{locale}/metrics', exist_ok=True)
+        try:
+            os.makedirs(f'{locale}/metrics', exist_ok=True)
 
-        with open(f'{locale}/metrics/{metric_name}-{date.today()}.csv', "+a") as file:
-            # file.write(f'cpu,memoria,fsreads,fswrites,packetsrec,packetstrans,bytesrec,bytestrans\n')
-            # after test check if the loop is here.
-            file.write(f'{value}\n')
+            with open(f'{locale}/metrics/{metric_name}-{date.today()}.csv', "+a") as file:
+                # file.write(f'cpu,memoria,fsreads,fswrites,packetsrec,packetstrans,bytesrec,bytestrans\n')
+                # after test check if the loop is here.
+                file.write(f'{value}\n')
+        except Exception as e:
+            os.makedirs("logs", exist_ok=True)
+            logging.basicConfig(
+                level=logging.ERROR, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', filename='logs/errors.log')
+            logging.error("Error: {}".format(e))
 
 
 if __name__ == "__main__":

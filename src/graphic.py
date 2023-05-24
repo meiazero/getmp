@@ -20,21 +20,23 @@ def read_data(file_name):
 # Plot the graph
 
 
-def plot_graph(x, y):
+def plot_graph(x, y, x_label='', y_label='', title='titulo'):
     plt.plot(x, y)
-    plt.xlabel('tempo')
-    plt.ylabel(f'% de uso')
-    plt.title('uso cpu')
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
+    plt.title(title)
     plt.grid(True)
     plt.show()
 
 # Main function
 
 
-def main():
-    file_name = './metrics/cpu-2023-05-23.csv'  # Update with your file name
+def main(path, output):
+    # file_name = './metrics/memoria-2023-05-24.csv'  # Update with your file name
+    file_name = path
     x, y = read_data(file_name)
     plot_graph(x, y)
+    # plt.savefig(output)
 
 
 if __name__ == '__main__':
