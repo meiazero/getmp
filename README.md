@@ -1,12 +1,13 @@
 # getmp
-this repo is for request the metrics of pod using prometheus on cluster kubernetes.
+
+this repo is for request the metric of pod using prometheus on cluster kubernetes.
 
 ## To use this project see the step-by-step
 
 # Requirements
 
-- python3
-- pipenv
+-   python3
+-   pipenv
 
 ## Environment
 
@@ -33,21 +34,22 @@ cp .env.example .env
 > edit the .env file with your URLs valids
 
 ```bash
-CPU=http://<ip>:<port>/<others>
-MEMORIA=http://<ip>:<port>/<others>
-FSREADS=http://<ip>:<port>/<others>
-FSWRITES=http://<ip>:<port>/<others>
-PACKETSREC=http://<ip>:<port>/<others>
-PACKETSTRANS=http://<ip>:<port>/<others>
-BYTESREC=http://<ip>:<port>/<others>
-BYTESTRANS=http://<ip>:<port>/<others>
+CPU=http://localhost:9090/api/v1/query?query=cpu
+MEMORIA=http://localhost:9090/api/v1/query?query=memoria
+FSREADS=http://localhost:9090/api/v1/query?query=fsreads
+FSWRITES=http://localhost:9090/api/v1/query?query=fswrites
+PACKETSREC=http://localhost:9090/api/v1/query?query=packetsreceived
+PACKETSTRANS=http://localhost:9090/api/v1/query?query=packetstransmitted
+BYTESREC=http://localhost:9090/api/v1/query?query=bytesreceived
+BYTESTRANS=http://localhost:9090/api/v1/query?query=bytestransmitted
 ```
 
 ## Run
 
 ```bash
-python3 src/main.py
+python3 src/get_all.py
 ```
 
 ## Contributing
 
+clone this repo and send your PR
