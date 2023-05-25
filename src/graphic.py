@@ -1,4 +1,11 @@
-# plot the graph from the data in the text file
+'''
+
+this file 'graphic.py' is under development, if you want to use
+it you will have to adapt it according to your usage.
+
+'''
+
+
 import matplotlib.pyplot as plt
 
 # Read data from the text file
