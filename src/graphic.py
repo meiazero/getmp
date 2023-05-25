@@ -15,13 +15,13 @@ def read_data(file_name):
             x_v += 5
             try:
                 y_a.append(float(values[0])-float(values[0-1]))
-            else:
-		        y_a.append(float(values[0]))
             except Exception as e:
                 os.makedirs("logs", exist_ok=True)
                 logging.basicConfig(
                     level=logging.ERROR, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', filename='logs/errors.log')
                 logging.error("Error: {}".format(e))
+            else:
+		        y_a.append(float(values[0]))
             
             
             x_a.append(float(x_v))
