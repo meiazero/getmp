@@ -16,9 +16,12 @@ def read_data(file_name):
             try:
                 y_a.append(float(values[0])-float(values[0-1])
             else:
-				y_a.append(float(values[0]))
-			except Except as e:
-				print(e)
+		y_a.append(float(values[0]))
+	    except Exception as e:
+        	os.makedirs("logs", exist_ok=True)
+        	logging.basicConfig(
+            	level=logging.ERROR, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', filename='logs/errors.log')
+        	logging.error("Error: {}".format(e))
             
             
             x_a.append(float(x_v))
