@@ -31,13 +31,14 @@ def plot_graph(x, y, x_label='', y_label='', title='titulo'):
 # Main function
 
 
-def main(path, output):
+def main(path, label_x='', label_y='', title='', output='.'):
     # file_name = './metrics/memoria-2023-05-24.csv'  # Update with your file name
     file_name = path
     x, y = read_data(file_name)
-    plot_graph(x, y)
+    plot_graph(x, y, x_label=label_x, y_label=label_y, title=title)
     # plt.savefig(output)
 
 
 if __name__ == '__main__':
-    main()
+    main(path="./metrics/pkgtrans-2023-05-24.csv",
+         label_x="tempo (s)", label_y="packets", title="PACKETS TRANSMITTED (%)")
