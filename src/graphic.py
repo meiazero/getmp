@@ -13,7 +13,14 @@ def read_data(file_name):
             values = line.split()
 
             x_v += 5
-            y_a.append(float(values[0]))
+            try:
+                y_a.append(float(values[0])-float(values[0-1])
+            else:
+				y_a.append(float(values[0]))
+			except Except as e:
+				print(e)
+            
+            
             x_a.append(float(x_v))
     return x_a, y_a
 
