@@ -4,18 +4,28 @@ import matplotlib.pyplot as plt
 # Read data from the text file
 
 
+def CalculateDiferenceValue(value_1, value_2):
+    return (value_2 - value_1)
+
+
 def read_data(file_name):
-    x_a = []
-    y_a = []
-    x_v = 0
+    x = []
+    y = []
+    timeInSeconds = 0
+    tmp = 0
     with open(file_name, 'r') as file:
         for line in file:
             values = line.split()
 
-            x_v += 5
-            y_a.append(float(values[0]))
-            x_a.append(float(x_v))
-    return x_a, y_a
+            timeInSeconds += 5
+            tmp = values[0]
+            try:
+                y.append(CalculateDiferenceValue(float(tmp), float(values[1])))
+            except:
+                y.append(float(tmp))
+
+            x.append(float(timeInSeconds))
+    return x, y
 
 # Plot the graph
 
