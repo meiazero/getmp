@@ -31,8 +31,8 @@ def plot_graph(x, y, x_label='', y_label='', title='titulo'):
 # Main function
 
 
-def main(path, output):
-    # file_name = './metrics/memoria-2023-05-24.csv'  # Update with your file name
+def main(path, output='.'):
+    # file_name = './metrics/cpu-2023-06-01.csv'  # Update with your file name
     file_name = path
     x, y = read_data(file_name)
     plot_graph(x, y)
@@ -40,4 +40,4 @@ def main(path, output):
 
 
 if __name__ == '__main__':
-    main()
+    main(path='./metrics/cpu-2023-06-01.csv')

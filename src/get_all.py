@@ -20,19 +20,13 @@ URLS = [CPU, MEMORIA, FSREADS, FSWRITES,
 
 
 def ReqMetrics(url, output, type='metric'):
-    try:
-        res: str = request.urlopen(url).read()
-        json_dict: dict = json.loads(res.decode('utf-8'))
-        out_dict: dict = [x for x in json_dict['data']
-                          ['result'][0]['value']]
-        value_zero = str(out_dict[1])
-        WriteMetricsOnFile(value=value_zero, locale=output, metric_name=type)
-        print(f'{type}: {value_zero}')
-    except Exception as e:
-        os.makedirs("logs", exist_ok=True)
-        logging.basicConfig(
-            level=logging.ERROR, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', filename='logs/errors.log')
-        logging.error("Error: {}".format(e))
+    res: str = request.urlopen(url).read()
+    json_dict = json.loads(res.decode('utf-8'))
+    out_dict = [x for x in json_dict['data']
+                      ['result'][0]['value']]
+    value_zero = str(out_dict[1])
+    WriteMetricsOnFile(value=value_zero, locale=output, metric_name=type)
+    print(f'{type}: {value_zero}')
 
 
 def WriteMetricsOnFile(value, locale='.', metric_name="metric",):
@@ -57,8 +51,8 @@ if __name__ == "__main__":
         ReqMetrics(MEMORIA, '.', 'memoria')
         ReqMetrics(FSREADS, '.', 'fsreads')
         ReqMetrics(FSWRITES, '.', 'fswrites')
-        ReqMetrics(PACKETSREC, '.', 'pkgrec')
-        ReqMetrics(PACKETSTRANS, '.', 'pkgtrans')
-        ReqMetrics(BYTESREC, '.', 'byrec')
-        ReqMetrics(BYTESTRANS,  '.', 'bytrans')
+        # ReqMetrics(PACKETSREC, '.', 'pkgrec')
+        # ReqMetrics(PACKETSTRANS, '.', 'pkgtrans')
+        # ReqMetrics(BYTESREC, '.', 'byrec')
+        # ReqMetrics(BYTESTRANS,  '.', 'bytrans')
         time.sleep(5)
