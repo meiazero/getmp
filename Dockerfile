@@ -5,7 +5,7 @@ FROM grafana/grafana:latest
 WORKDIR /usr/share/grafana
 
 # Copiar arquivos de configuração personalizados
-COPY ./custom-config.ini ./conf/custom-config.ini
+COPY grafana/custom-config.ini conf/custom-config.ini
 
 # Configurar volumes
 VOLUME ["/home/meiazero/Projetos/getmp/grafana/"]
