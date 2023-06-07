@@ -1,43 +1,13 @@
-# plot the graph from the data in the text file
 import matplotlib.pyplot as plt
-
-# Read data from the text file
-
-
-def read_data(file_name):
-    x_a = []
-    y_a = []
-    x_v = 0
-    with open(file_name, 'r') as file:
-        for line in file:
-            values = line.split()
-
-            x_v += 5
-            y_a.append(float(values[0]))
-            x_a.append(float(x_v))
-    return x_a, y_a
-
-# Plot the graph
+import pandas as pd
 
 
-def plot_graph(x, y, x_label='', y_label='', title='titulo'):
-    plt.plot(x, y)
-    plt.xlabel(x_label)
-    plt.ylabel(y_label)
-    plt.title(title)
-    plt.grid(True)
-    plt.show()
+data = pd.read_csv('./metrics/cpu_alvo-2023-06-06.csv')
+timestamps = [i for i in range(1, len(data)+1)]
 
-# Main function
-
-
-def main(path, output='.'):
-    # file_name = './metrics/cpu-2023-06-01.csv'  # Update with your file name
-    file_name = path
-    x, y = read_data(file_name)
-    plot_graph(x, y)
-    # plt.savefig(output)
-
-
-if __name__ == '__main__':
-    main(path='./metrics/cpu-2023-06-01.csv')
+plt.plot(timestamps, data)
+plt.xlabel('Tempo')
+plt.ylabel('Valor Métrico')
+plt.title('Gráfico de Métricas do Kubernetes')
+plt.xticks(rotation=45)
+plt.show()
