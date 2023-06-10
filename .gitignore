@@ -153,6 +153,11 @@ cython_debug/
 # metrics path
 /metrics
 
+# grafana config
 grafana/custom-config.ini
 
+# asdf version manager
 .tool-versions
+
+# logs
+logs/
