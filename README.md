@@ -33,7 +33,7 @@ cp .env.example .env
 
 > edit the .env file with your URLs valids
 
-```bash
+```env
 CPU=http://localhost:9090/api/v1/query?query=cpu
 MEMORIA=http://localhost:9090/api/v1/query?query=memoria
 FSREADS=http://localhost:9090/api/v1/query?query=fsreads
