@@ -1,37 +1,46 @@
-# plot the graph from the data in the text file
 import matplotlib.pyplot as plt
 import pandas as pd
 
 
-data = pd.read_csv('./metrics/cpu_alvo-2023-06-06.csv')
-timestamps = [i for i in range(1, len(data)+1)]
+class GraphPlotter:
+    def __init__(self, input_file, output_path, title='Gráfico', xlabel='Time', ylabel='Value'):
+        self.input_file = input_file
+        self.output_path = output_path
+        self.title = title
+        self.xlabel = xlabel
+        self.ylabel = ylabel
 
-            x_v += 5
-            y_a.append(float(values[0]))
-            x_a.append(float(x_v))
-    return x_a, y_a
+    def read_data(self):
+        # Ler os dados do arquivo CSV
+        self.df = pd.read_csv(self.input_file)
 
-# Plot the graph
+    def plot_graph(self):
+        # Criar uma figura e eixos
+        fig, ax = plt.subplots()
+        time = [i for i in range(len(self.df['Time']))]
 
+        # Plotar o gráfico de dispersão
+        ax.scatter(time, self.df['Value'],
+                   marker='.', color='red', label='Value')
 
-def plot_graph(x, y, x_label='', y_label='', title='titulo'):
-    plt.plot(x, y)
-    plt.xlabel(x_label)
-    plt.ylabel(y_label)
-    plt.title(title)
-    plt.grid(True)
-    plt.show()
+        # Plotar o gráfico de linha
+        ax.plot(time, self.df['Value'])
 
-# Main function
+        ax.grid(True)
 
+        # Definir o título do gráfico
+        ax.set_title(self.title)
 
-def main(path, output):
-    # file_name = './metrics/memoria-2023-05-24.csv'  # Update with your file name
-    file_name = path
-    x, y = read_data(file_name)
-    plot_graph(x, y)
-    # plt.savefig(output)
+        # Definir os rótulos dos eixos
+        ax.set_xlabel(self.xlabel)
 
+        ax.set_ylabel(self.ylabel)
 
-if __name__ == '__main__':
-    main()
+        # Definir a legenda
+        ax.legend(loc='upper center', frameon=False, fontsize=8)
+
+        # Salvar o gráfico no caminho especificado
+        plt.savefig(self.output_path)
+
+        # Mostrar o gráfico na tela (opcional)
+        # plt.show()
