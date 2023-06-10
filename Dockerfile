@@ -8,7 +8,7 @@ WORKDIR /usr/share/grafana
 COPY grafana/custom-config.ini conf/custom-config.ini
 
 # Configurar volumes
-VOLUME ["/home/meiazero/Projetos/getmp/grafana/"]
+VOLUME ["/tmp/getmp/grafana/"]
 
 # Expor a porta padrão do Grafana
 EXPOSE 3000
