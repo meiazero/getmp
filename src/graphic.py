@@ -1,36 +1,13 @@
-'''
-
-this file 'graphic.py' is under development, if you want to use
-it you will have to adapt it according to your usage.
-
-'''
-
-
+# plot the graph from the data in the text file
 import matplotlib.pyplot as plt
+import pandas as pd
 
-# Read data from the text file
 
-
-def read_data(file_name):
-    x_a = []
-    y_a = []
-    x_v = 0
-    with open(file_name, 'r') as file:
-        for line in file:
-            values = line.split()
+data = pd.read_csv('./metrics/cpu_alvo-2023-06-06.csv')
+timestamps = [i for i in range(1, len(data)+1)]
 
             x_v += 5
-            try:
-                y_a.append(float(values[0])-float(values[0-1]))
-            except Exception as e:
-                os.makedirs("logs", exist_ok=True)
-                logging.basicConfig(
-                    level=logging.ERROR, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', filename='logs/errors.log')
-                logging.error("Error: {}".format(e))
-            else:
-		        y_a.append(float(values[0]))
-            
-            
+            y_a.append(float(values[0]))
             x_a.append(float(x_v))
     return x_a, y_a
 
@@ -48,14 +25,13 @@ def plot_graph(x, y, x_label='', y_label='', title='titulo'):
 # Main function
 
 
-def main(path, label_x='', label_y='', title='', output='.'):
+def main(path, output):
     # file_name = './metrics/memoria-2023-05-24.csv'  # Update with your file name
     file_name = path
     x, y = read_data(file_name)
-    plot_graph(x, y, x_label=label_x, y_label=label_y, title=title)
+    plot_graph(x, y)
     # plt.savefig(output)
 
 
 if __name__ == '__main__':
-    main(path="./metrics/pkgtrans-2023-05-24.csv",
-         label_x="tempo (s)", label_y="packets", title="PACKETS TRANSMITTED (%)")
+    main()

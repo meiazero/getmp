@@ -147,9 +147,12 @@ cython_debug/
 # vscode
 .vscode/
 
+# macos stuff
+.DS_Store
 
 # metrics path
 /metrics
 
+grafana/custom-config.ini
+
 .tool-versions
-```
