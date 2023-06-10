@@ -1,5 +1,5 @@
-import matplotlib.pyplot as plt
-import pandas as pd
+from matplotlib.pyplot import savefig, subplots
+from pandas import read_csv
 
 
 class GraphPlotter:
@@ -12,11 +12,11 @@ class GraphPlotter:
 
     def read_data(self):
         # Ler os dados do arquivo CSV
-        self.df = pd.read_csv(self.input_file)
+        self.df = read_csv(self.input_file)
 
     def plot_graph(self):
         # Criar uma figura e eixos
-        fig, ax = plt.subplots()
+        fig, ax = subplots()
         time = [i for i in range(len(self.df['Time']))]
 
         # Plotar o gráfico de dispersão
@@ -40,7 +40,7 @@ class GraphPlotter:
         ax.legend(loc='upper center', frameon=False, fontsize=8)
 
         # Salvar o gráfico no caminho especificado
-        plt.savefig(self.output_path)
+        savefig(self.output_path)
 
         # Mostrar o gráfico na tela (opcional)
-        # plt.show()
+        # show()
