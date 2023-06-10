@@ -1,36 +1,63 @@
+import argparse
 import matplotlib.pyplot as plt
+import pandas as pd
 
 
-def get_values_from_file(path):
-    values = []
-    with open(path, 'r') as file:
-        for line in file:
-            values.append(float(line.split()[0]))
-    return values
+class GraphPlotter:
+    def __init__(self, input_file, output_path):
+        self.input_file = input_file
+        self.output_path = output_path
 
+    def read_data(self):
+        # Ler os dados do arquivo CSV
+        self.df = pd.read_csv(self.input_file)
 
-def plot_variation_graph(values_incremented):
-    values = []
-    time = [i for i in range(len(values))]
+    def plot_graph(self):
+        # Criar uma figura e eixos
+        fig, ax = plt.subplots()
+        time = [i for i in range(len(self.df['Time']))]
 
-    for i in range(len(values)):
-        temp = values[i-1]
-        values.append(values_incremented[i] - temp)
+        # Plotar o gráfico de dispersão
+        ax.scatter(time, self.df['Value'],
+                   marker='.', color='red', label='Value')
 
-    # plt.scatter(time, values)
-    plt.xlabel('Tempo (s)')
-    plt.ylabel('Uso de cpu')
-    plt.title('Uso de cpu')
-    plt.grid(True)
-    plt.plot(time, values)
-    plt.show()
+        # Plotar o gráfico de linha
+        ax.plot(time, self.df['Value'])
 
+        # Definir o título do gráfico
+        ax.set_title('Uso de Memoria')
 
-def main():
-    file_path = './metrics/cpu_alvo-2023-06-06.csv'
-    values = get_values_from_file(file_path)
-    plot_variation_graph(values)
+        # Definir o rótulo do eixo X
+        ax.set_xlabel('Tempo')
+
+        # Definir o rótulo do eixo Y
+        ax.set_ylabel('Uso de Memoria')
+
+        # diminue a fonte dos ticks
+        ax.tick_params(axis='both', which='major', labelsize=8)
+
+        # Salvar o gráfico no caminho especificado
+        plt.savefig(self.output_path)
+
+        # Mostrar o gráfico na tela (opcional)
+        # plt.show()
 
 
 if __name__ == '__main__':
-    main()
+    # Configurar os argumentos de linha de comando
+    parser = argparse.ArgumentParser(
+        description='Plotar um gráfico a partir de um arquivo CSV')
+    parser.add_argument('input_file', type=str,
+                        help='Caminho para o arquivo CSV de entrada')
+    parser.add_argument('output_path', type=str,
+                        help='Caminho para salvar o gráfico')
+    args = parser.parse_args()
+
+    # Criar uma instância do GraphPlotter
+    plotter = GraphPlotter(args.input_file, args.output_path)
+
+    # Ler os dados do arquivo
+    plotter.read_data()
+
+    # Plotar o gráfico
+    plotter.plot_graph()
