@@ -3,12 +3,12 @@ from pandas import read_csv
 
 
 class GraphPlotter:
-    def __init__(self, input_file, output_path, title='Gráfico', xlabel='Time', ylabel='Value'):
+    def __init__(self, input_file, output_path):
         self.input_file = input_file
         self.output_path = output_path
-        self.title = title
-        self.xlabel = xlabel
-        self.ylabel = ylabel
+        self.title = "Variação do uso de memória - Pod Observado"
+        self.xlabel = "Tempo (s)"
+        self.ylabel = "Uso de memória"
 
     def read_data(self):
         # Ler os dados do arquivo CSV
@@ -17,14 +17,19 @@ class GraphPlotter:
     def plot_graph(self):
         # Criar uma figura e eixos
         fig, ax = subplots()
-        time = [i for i in range(len(self.df['Time']))]
+        time = [i for i in range(len(self.df['time']))]
+
+        # posiciona as legendas do scarter no gráfico
 
         # Plotar o gráfico de dispersão
-        ax.scatter(time, self.df['Value'],
-                   marker='.', color='red', label='Value')
-
-        # Plotar o gráfico de linha
-        ax.plot(time, self.df['Value'])
+        ax.scatter(time, self.df['memory_with_attack'],
+                     marker='.')
+        ax.scatter(time, self.df['memory_without_attack'],
+                   marker='.')
+        
+        # Plotar o gráfico de linhas
+        ax.plot(time, self.df['memory_with_attack'], label='cenario 1', color='blue')
+        ax.plot(time, self.df['memory_without_attack'],  label='cenario 2', color='orange')
 
         ax.grid(True)
 
@@ -37,10 +42,9 @@ class GraphPlotter:
         ax.set_ylabel(self.ylabel)
 
         # Definir a legenda
-        ax.legend(loc='upper center', frameon=False, fontsize=8)
+        ax.legend(loc='upper left', frameon=False, fontsize=8)
 
         # Salvar o gráfico no caminho especificado
         savefig(self.output_path)
 
-        # Mostrar o gráfico na tela (opcional)
-        # show()
+

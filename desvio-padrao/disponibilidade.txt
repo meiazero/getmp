@@ -1,0 +1,2 @@
+com ataque = 2.446
+sem ataque = 0.0
